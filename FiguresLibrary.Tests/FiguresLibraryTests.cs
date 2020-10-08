@@ -20,52 +20,67 @@ namespace FiguresLibrary.Tests
         }
 
         [Test]
+        public void Calculator_CalculateAreaSum_NullArgument_ThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => Calculator.CalculateAreaSum(null));
+        }
+
+        [Test]
+        public void Calculator_CalculateAreaSum_EmptyCollectionArgument_ThrowArgumentNullException()
+        {
+            Assert.Throws<InvalidOperationException>(() => Calculator.CalculateAreaSum(new IFigure[0]));
+        }
+
+        [Test]
         public void Circle_CalculateArea_ShouldReturnCorrectResult()
         {
-            //arrange
-            Circle circle = new Circle(5);
-            //act
+            var circle = new Circle(5);
             var area = circle.CalculateArea();
-            //assert
             Assert.AreEqual(Math.PI * Math.Pow(5, 2), area, "Разные значения");
         }
 
         [Test]
-        public void RightTriangle_Calculate_Area_With_Sides_3_4_5_Is_6()
+        public void Circle_CalculateArea_NegativeValue_ArgumentOutOfRangeException()
         {
-            //arrange
-            RightTriangle righttriangle = new RightTriangle(3, 4, 5);
-            //act
-            var area = righttriangle.CalculateArea();
-            //assert
-            Assert.AreEqual(6, area, "Разные значения");
-        }
-
-        [Test]
-        public void Test_With_Negative_Value_For_Radius_Of_Circle()
-        {
-            Circle circle = new Circle(-5);
+            var circle = new Circle(-5);
             Assert.Throws<ArgumentOutOfRangeException>(() => circle.CalculateArea());
         }
 
         [Test]
-        //[ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_With_Negative_Value_For_Side_Of_RightTriangle()
+        public void RightTriangle_CalculateArea_With_Sides_3_4_5_Is_6()
         {
-            //arrange
-            RightTriangle righttriangle = new RightTriangle(-3, 4, 5);
-            //act
-            var area = righttriangle.CalculateArea();
+            var rightTriangle = new RightTriangle(3, 4, 5);
+            var area = rightTriangle.CalculateArea();
+            Assert.AreEqual(6, area, "Разные значения");
         }
 
         [Test]
-        //[ExpectedException(typeof(FormatException))]
-        public void RightTriangle_Is_Right() //Проверяем правильность введенных сторон                                           
-        {                                    //Если они не соответствуют прямоугольному треугольнику, то получаем исключение 
-            //arrange
-            RightTriangle righttriangle = new RightTriangle(1, 1, 1);
-            //act
-            var area = righttriangle.CalculateArea();
+        public void RightTriangle_CalculateArea_BadSides_InvalidOperationException()
+        {
+            var rightTriangle = new RightTriangle(3, 4, 6);
+            Assert.Throws<InvalidOperationException>(() => rightTriangle.CalculateArea());
+        }
+
+        [Test]
+        public void Triangle_CalculateArea_With_Sides_5_5_8_Is_12()
+        {
+            var triangle = new Triangle(5, 5, 8);
+            var area = triangle.CalculateArea();
+            Assert.AreEqual(12, area, "Разные значения");
+        }
+
+        [Test]
+        public void Triangle_CalculateArea_NegativeSide_ArgumentOutOfRangeException()
+        {
+            var triangle = new Triangle(-1, 4, 6);
+            Assert.Throws<ArgumentOutOfRangeException>(() => triangle.CalculateArea());
+        }
+
+        [Test]
+        public void Triangle_CalculateArea_BadSides_InvalidOperationException()
+        {
+            var triangle = new Triangle(2, 2, 8);
+            Assert.Throws<InvalidOperationException>(() => triangle.CalculateArea());
         }
     }
 }
